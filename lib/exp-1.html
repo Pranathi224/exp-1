@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #43bcef;
+    }
+    form {
+      background: rgb(248, 122, 202);
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px #aaa;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    .gender-options {
+      display: flex;
+      gap: 20px;
+      margin-top: 5px;
+    }
+    .gender-options input {
+      width: auto;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #007BFF;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="registrationForm" novalidate>
+    <h2>Registration Form</h2>
+
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required minlength="4" maxlength="15" pattern="^[a-zA-Z0-9_]+$" 
+           title="4-15 characters, letters, numbers, and underscore only" />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required minlength="6" 
+           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" 
+           title="Minimum 6 characters, at least one letter and one number" />
+
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" name="dob" required max="" />
+
+    <label>Gender</label>
+    <div class="gender-options">
+      <label><input type="radio" name="gender" value="Male" required /> Male</label>
+      <label><input type="radio" name="gender" value="Female" /> Female</label>
+      <label><input type="radio" name="gender" value="Other" /> Other</label>
+    </div>
+
+    <label for="state">State</label>
+    <input type="text" id="state" name="state" required />
+
+    <label for="country">Country</label>
+    <input type="text" id="country" name="country" required />
+
+    <label for="mobile">Mobile Number</label>
+    <input type="tel" id="mobile" name="mobile" required pattern="^\d{10}$" 
+           title="10 digit mobile number" />
+
+    <label for="course">Course</label>
+    <select id="course" name="course" required>
+      <option value="" disabled selected>Select your course</option>
+      <option value="CSE">CSE</option>
+      <option value="AIML">AIML</option>
+      <option value="ECE">ECE</option>
+      <option value="EEE">EEE</option>
+    </select>
+
+    <button type="submit">Register</button>
+    <p class="error" id="errorMsg"></p>
+  </form>
+
+  <script>
+    document.getElementById('dob').max = new Date().toISOString().split("T")[0];
+
+    const form = document.getElementById('registrationForm');
+    const errorMsg = document.getElementById('errorMsg');
+
+    form.addEventListener('submit', function(event) {
+      errorMsg.textContent = '';
+      const pwd = form.password.value;
+      const confirmPwd = form.confirmPassword.value;
+      if (pwd !== confirmPwd) {
+        event.preventDefault();
+        errorMsg.textContent = 'Passwords do not match.';
+        form.confirmPassword.focus();
+        return false;
+      }
+    });
+  </script>
+
+</body>
+</html>
